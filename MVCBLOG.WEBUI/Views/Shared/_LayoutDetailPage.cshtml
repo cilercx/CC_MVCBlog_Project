@@ -1,0 +1,54 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="~/Content/images/fav_bc.png" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title style="color: white;">Burak Coşkun'un Web Günlüğü</title>
+
+    @Styles.Render("~/bundles/css/genel")
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <script src="~/Content/js/jquery-ui.min.js"></script>
+    <link href="~/Content/css/Sh/SyntaxHighlighter.css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="~/Content/css/Sh/shCore.css" />
+    <link type="text/css" rel="Stylesheet" href="~/Content/css/Sh/shThemeDefault.css" />   
+    <script type="text/javascript" src="~/Content/js/Sh/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
+    <script type="text/javascript" src="~/Content/js/Sh/shCore.js"></script>
+    <script src="~/Content/js/Sh/shBrushCSharp.js"></script>
+    <script src="~/Content/js/Sh/shBrushSql.js"></script>
+    <script src="~/Content/js/Sh/shBrushPhp.js"></script>
+    <script src="~/Content/js/Sh/shBrushJScript.js"></script>  
+    
+
+    
+    <script>SyntaxHighlighter.config.stripBrs = true;</script>  
+    <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+    
+
+   
+</head>
+
+<body>
+    <img class="img-responsive" src="~/Content/images/ustmenubg.png" />
+    @Html.Partial("~/Views/Shared/Partials/MenuPartial.cshtml")
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
+            <aside class="col-md-3">
+                @Html.Partial("~/Views/Shared/Partials/SideBarPartial.cshtml")
+            </aside>
+        </div>
+    </div>
+    @Html.Partial("~/Views/Shared/Partials/FooterPartial.cshtml")
+    @Scripts.Render("~/bundles/js/genel")
+    
+</body>
+</html>

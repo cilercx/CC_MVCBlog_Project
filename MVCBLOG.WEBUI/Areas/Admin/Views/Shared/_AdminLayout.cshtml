@@ -1,0 +1,214 @@
+﻿@using MVCBLOG.ENTITY.Model_DTO
+
+@{
+    UserDTO UserDto = new UserDTO();
+
+    if (Session["User"] != null)
+    {
+        UserDto = (UserDTO)Session["User"];
+
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="~/Areas/Admin/Content/images/fav_bc.png" type="image/x-icon" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Blog Admin Panel</title>
+    <!-- Bootstrap core CSS-->
+    <link href="~/Areas/Admin/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom fonts for this template-->
+    <link href="~/Areas/Admin/Content/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Custom styles for this template-->
+    <link href="~/Areas/Admin/Content/css/sb-admin.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/css/userprofile.css" rel="stylesheet" />
+
+
+    <style>
+        .bg-dark {
+            background-color: #161616 !important;
+        }
+
+        #mainNav.navbar-dark .navbar-collapse .navbar-sidenav {
+            background-color: #1a1a1a !important;
+        }
+
+        #mainNav.navbar-dark .navbar-collapse .navbar-sidenav > .nav-item .sidenav-second-level > li > a, #mainNav.navbar-dark .navbar-collapse .navbar-sidenav > .nav-item .sidenav-third-level > li > a {
+            background-color: #1e1e1e !important;
+        }
+    </style>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+
+</head>
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <a class="navbar-brand" href="/Admin/Panel">Blog Admin Panel</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <a class="nav-link" href="/Admin/Panel">
+                        <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">Ana Sayfa</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+                        <i class="fa fa-fw fa-pencil-square-o"></i>
+                        <span class="nav-link-text">Makaleler</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseComponents">
+                        <li>
+                            <a href="/Admin/Post">Tüm Makaleler</a>
+                        </li>
+                        <li>
+                            <a href="/Admin/Post/AddPost">Makale Ekle</a>
+                        </li>
+                        <li>
+                            <a href="/Admin/Category">Kategoriler</a>
+                        </li>
+                        <li>
+                            <a href="/Admin/Category/AddCategory">Kategori Ekle</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
+                        <i class="fa fa-fw fa-file"></i>
+                        <span class="nav-link-text">Sayfalar</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseExamplePages">
+                        <li>
+                            <a href="#">Tüm Sayfalar</a>
+                        </li>
+                        <li>
+                            <a href="#">Sayfa Ekle</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages1" data-parent="#exampleAccordion">
+                        <i class="fa fa-fw fa-user"></i>
+                        <span class="nav-link-text">Kullanıcılar</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseExamplePages1">
+                        <li>
+                            <a href="#">Tüm Kullanıcılar</a>
+                        </li>
+                        <li>
+                            <a href="/Admin/User/AddUser">Kullanıcı Ekle</a>
+                        </li>
+                    </ul>
+                </li>
+                
+            </ul>
+            <ul class="navbar-nav sidenav-toggler">
+                <li class="nav-item">
+                    <a class="nav-link text-center" id="sidenavToggler">
+                        <i class="fa fa-fw fa-angle-left"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+               
+                <li class="nav-item">
+                    <form class="form-inline my-2 my-lg-0 mr-lg-2">
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="Makale Ara...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                </li>
+                @if (UserDto != null)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                            <i class="fa fa-fw fa-user "></i>
+                            Hoşgeldin @(UserDto.NameDTO + " " + UserDto.SurnameDTO)
+                        </a>
+                    </li>
+                }
+
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-fw fa-sign-out"></i>Oturumu Kapat
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="index.html">Panel</a>
+                </li>
+                <li class="breadcrumb-item active">Ana Sayfa</li>
+            </ol>
+            <div class="row">
+                <div class="col-12">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid-->
+        <!-- /.content-wrapper-->
+        <footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center">
+                    <p class="text-center">Copyright &copy; @DateTime.Now.Year - Burak Coşkun</p>
+                </div>
+            </div>
+        </footer>
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Oturumu kapatmak istediğinize emin misiniz?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Mevcut oturumu kapatmak için lütfen oturumu kapat butonuna tıklayınız.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">İptal Et</button>
+                        <a class="btn btn-primary" href="/Home/LogOff">Oturumu Kapat</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap core JavaScript-->
+        
+        <script src="~/Areas/Admin/Content/vendor/jquery/jquery.min.js"></script>
+        <script src="~/Areas/Admin/Content/vendor/popper/popper.min.js"></script>
+        <script src="~/Areas/Admin/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="~/Areas/Admin/Content/vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="~/Areas/Admin/Content/js/sb-admin.min.js"></script>
+        <script src="~/Areas/Admin/Content/js/ckeditor/ckeditor.js"></script>
+        <script src="~/Areas/Admin/Content/js/ckfinder/ckfinder.js"></script>
+        <script src="~/Areas/Admin/Content/vendor/jquery/jquery.slugit.js"></script>
+    </div>
+</body>
+</html>

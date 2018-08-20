@@ -1,0 +1,135 @@
+﻿
+<style>
+    .panel-heading span {
+        margin-top: -20px;
+        font-size: 15px;
+    }
+
+    .clickable {
+        cursor: pointer;
+    }
+
+    .pull-right {
+        float: right !important;
+    }
+
+    li a {
+        color: #525353;
+    }
+</style>
+
+@using (@Html.BeginForm("AramaSonucu", "Home"))
+{
+@* Arama Kısmı *@
+<div class="input-group" style="margin-top: 10px;">
+    <input type="text" id="aranankelime" name="aranankelime" class="form-control" placeholder="Başlıklarda ara...">
+    <span class="input-group-btn input-group-sm">
+        <i class="fa fa-search fa-fw"></i><input class="btn btn-primary btn-search" id="btnMakaleAra" style="height: 40px;" type="submit" value="Ara">
+    </span>
+</div>
+}
+
+
+@* Profil Bilgileri *@
+<div class="card hovercard" style="border-style: solid; margin-top: 15px; border-width: 1px; border-radius: 3px; border-color: #cacaca !important; margin-bottom: 15px; ">
+    <div class="cardheader">
+
+    </div>
+    <div class="avatar">
+        <img alt="ProfilePhoto" src="~/Content/images/cilerc.jpg" height="200">
+    </div>
+    <br>
+    <div class="info" style="margin-bottom: 10px;">
+        <div class="title">
+            <a target="_blank" href="http://www.cilercoskun.com">Çiler Coşkun</a>
+        </div>
+        <div class="desc"><b>.NET Developer</b></div>
+        <a href="https://github.com/cilercX" class="btn btn-social-icon btn-github" target="_blank" style="width: 30px; height: 30px;"><span class="fa fa-github"></span></a>&nbsp;&nbsp;
+        <a href="https://www.linkedin.com/in/%C3%A7iler-co%C5%9Fkun-72682a59/" target="_blank" class="btn btn-social-icon btn-linkedin" style="width: 30px; height: 30px;"><span class="fa fa-linkedin"></span></a>&nbsp;&nbsp;
+        @*<a class="btn btn-social-icon btn-facebook" style="width: 30px; height: 30px;"><span class="fa fa-facebook"></span></a>&nbsp;&nbsp;*@
+        <a href="https://twitter.com/cilerrsahin" class="btn btn-social-icon btn-twitter" target="_blank" style="width: 30px; height: 30px;"><span class="fa fa-twitter"></span></a>
+    </div>
+</div>
+
+@* Kategoriler *@
+<div class="panel panel-primary" style="border-color: #cacaca !important;">
+    <div class="panel-heading" style="border-color: #397db3 !important; background-color: #397db3 !important;">
+        <b><h3 class="panel-title">Kategoriler</h3></b>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+
+    <div class="menu-category list-group panel-body" id="category">
+        @Html.Action("AllCategories", "Partials")
+
+    </div>
+</div>
+
+@* Son Makaleler *@
+<div class="panel panel-primary" style="border-color: #cacaca !important;">
+    <div class="panel-heading" style="border-color: #397db3 !important; background-color: #397db3 !important;">
+        <b><h3 class="panel-title">Yeni Makaleler</h3></b>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+
+    <div class="menu-category list-group panel-body" id="RecentPost">
+        @Html.Action("RecentPosts", "Partials")
+
+    </div>
+</div>
+
+@* En çok Okunanlar *@
+<div class="panel panel-primary" style="border-color: #cacaca !important;">
+    <div class="panel-heading" style="border-color: #397db3 !important; background-color: #397db3 !important;">
+        <b>
+            <h3 class="panel-title">En Çok Okunanlar</h3>
+        </b>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+
+    <div class="menu-category list-group panel-body list-un" id=Postbyhits>
+        @Html.Action("MostViewPosts", "Partials")
+
+    </div>
+</div>
+
+@* Ziyaretçi Sayıları *@
+@*<div class="panel panel-primary" style="border-color: #cacaca !important;">
+        <div class="panel-heading" style="border-color: #397db3 !important; background-color: #397db3 !important;">
+            <b>
+                <h3 class="panel-title">Ziyaretçi Sayısı</h3>
+            </b>
+            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+        </div>
+
+        <div class="menu-category list-group panel-body" id=Postbyhits>
+            <b>Toplam Ziyaretçi Sayısı:</b> 125<br />
+            <b>Bugünkü Ziyaretçi Sayısı:</b> 40
+
+        </div>
+    </div>*@
+
+@* Bağlantılar *@
+<div class="panel panel-primary" style="border-color: #cacaca !important;">
+    <div class="panel-heading" style="border-color: #397db3 !important; background-color: #397db3 !important;">
+        <b>
+            <h3 class="panel-title">Bağlantılar</h3>
+        </b>
+        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+    </div>
+    <div class="menu-category list-group panel-body" id=Postbyhits>
+        <a href="http://www.borakasmer.com/" target="_blank" class="menu-item list-group-item">
+            Bora Kaşmer
+        </a>
+        <a href="http://enginpolat.com/" target="_blank" class="menu-item list-group-item">
+            Engin Polat
+        </a>
+        <a href="http://daron.yondem.com/" target="_blank" class="menu-item list-group-item">
+            Daron Yöndem
+        </a>
+        <a href="https://muratbaseren.wordpress.com/author/muratbaseren/" target="_blank" class="menu-item list-group-item">
+            Kadir Murat Başaren
+        </a>
+    </div>
+
+</div>
+

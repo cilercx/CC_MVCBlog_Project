@@ -1,0 +1,279 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+<html lang="en" class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="~/Content/images/fav_bc.png" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="alternate" href="http://www.burakcoskun.net" hreflang="tr">
+    <title style="color: white;">Çiler Coşkun'un Web Günlüğü</title>
+    <meta name="description" content="Çiler Coşkun'un Web Günlüğü'nde C#, Asp.Net, Asp.Net MVC, Mssql, Mysql, Fluent NHibernate, Devexpress, Linq Lambda vb konu başlıklarında makaleler yazılmaktadır.">
+    <meta name="keywords" content="C#, Vb.Net, Asp.Net, Asp.Net MVC, Mssql, Mysql, Fluent NHibernate, Devexpress, Linq Lambda">
+    <meta name="author" content="Burak Coşkun">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="classification" content="Programlama Yazılım">
+    <meta name="rating" content="General">
+    <meta name="resource-type" content="document">
+    <meta name="robots" content="All">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    @Styles.Render("~/bundles/css/genel")
+    @Scripts.Render("~/bundles/js/genel")
+    @Scripts.Render("~/bundles/js/ajaxvalidation")
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <script src="~/Content/js/jquery-ui.min.js"></script>    
+    <link href="~/Content/css/Sh/SyntaxHighlighter.css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="~/Content/css/Sh/shCore.css" />
+    <link type="text/css" rel="Stylesheet" href="~/Content/css/Sh/shThemeDefault.css" /> 
+    <script type="text/javascript" src="~/Content/js/Sh/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
+    <script type="text/javascript" src="~/Content/js/Sh/shCore.js"></script>
+    <script src="~/Content/js/Sh/shBrushCSharp.js"></script>
+    <script src="~/Content/js/Sh/shBrushSql.js"></script>
+    <script src="~/Content/js/Sh/shBrushPhp.js"></script>
+    <script src="~/Content/js/Sh/shBrushJScript.js"></script>
+
+
+    <script>SyntaxHighlighter.config.stripBrs = true;</script>
+        <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+    
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-11898328-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-11898328-1');
+    </script>
+
+
+    @* Back to top JS *@
+    <script>
+        $(document).ready(function () {
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('#scroll').fadeIn();
+                } else {
+                    $('#scroll').fadeOut();
+                }
+            });
+            $('#scroll').click(function () {
+                $("html, body").animate({ scrollTop: 0 }, 600);
+                return false;
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#aranankelime").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "@Url.Action("SearchPost")",
+                        type: "POST",
+                        dataType: "json",
+                        data: { deger: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.TitleDto, value: item.TitleDto };
+                            }));
+                        }
+                    });
+                },
+                messages: {
+                    sonuc: "",
+                    sonuc: ""
+                }
+            });
+        })
+    </script>
+
+    @* Arama kısmı enter a basıldığında arama işlemi *@
+    <script>
+        $(document).ready(function () {
+            $("#aranankelime").keypress(function (e) {
+                if (e.which == 13) {
+                    e.preventDefault();
+                    search();
+                }
+            });
+        });
+
+        function search() {
+            var value = $("#aranankelime").val().trim();
+            dynamicColor();
+            if (isEmpty(value))
+                return;
+
+            var searchUrl = '/urlburayayazilacak!!!/' + encodeURIComponent(value);
+            window.location.href = searchUrl;
+        }
+
+        $(function () {
+            $("#dialog").dialog({
+                autoOpen: false,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+            });
+
+            $("#opener").on("click", function () {
+                $("#dialog").dialog("open");
+            });
+        });
+
+        function CollapsePanel() {
+            $(document).on('click', '.panel-heading span.clickable', function (e) {
+                var $this = $(this);
+                if (!$this.hasClass('panel-collapsed')) {
+                    $this.parents('.panel').find('.panel-body').slideUp();
+                    $this.addClass('panel-collapsed');
+                    $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+                } else {
+                    $this.parents('.panel').find('.panel-body').slideDown();
+                    $this.removeClass('panel-collapsed');
+                    $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+                }
+            });
+        }
+
+    </script>
+
+    <style>
+        .categoryTitle h2 {
+            border: dot-dash;
+            background-color: rgb(61, 62, 64);
+            color: #ffffff;
+            border-radius: 10px;
+            padding: 10px;
+            text-shadow: 2px 2px #000000;
+        }
+
+        .titleFontSize {
+            font-size: 25px;
+        }
+
+        .articleFontSize {
+            font-size: 13px;
+        }
+
+        .panel-heading {
+            padding: 10px 15px;
+            border-bottom: 1px solid transparent;
+            border-top-right-radius: 3px;
+            border-top-left-radius: 3px;
+        }
+
+        .baslik-panel:hover {
+            background-color: #fef1e2;
+            border-color: #fbeed5;
+        }
+
+        #scroll {
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            background-color: #3498db;
+            text-indent: -9999px;
+            display: none;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+
+            #scroll span {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-left: -8px;
+                margin-top: -12px;
+                height: 0;
+                width: 0;
+                border: 8px solid transparent;
+                border-bottom-color: #ffffff;
+            }
+
+            #scroll:hover {
+                background-color: #e74c3c;
+                opacity: 1;
+                filter: "alpha(opacity=100)";
+                -ms-filter: "alpha(opacity=100)";
+            }
+
+        #aranankelime {
+            height: 40px;
+        }
+
+        .titleFontSize {
+            font-size: 25px;
+        }
+
+        .articleFontSize {
+            font-size: 13px;
+        }
+
+        .panel-heading {
+            padding: 10px 15px;
+            border-bottom: 1px solid transparent;
+            border-top-right-radius: 3px;
+            border-top-left-radius: 3px;
+        }
+
+        .panel-default {
+            border-color: #cacaca;
+        }
+    </style>
+
+    <script type="text/javascript">
+        CollapsePanel();
+    </script>
+
+    @* Accordion Jquery *@
+    <script>
+        $(function () {
+            $("#accordion").accordion({
+                heightStyle: "content",
+                active: false,
+                collapsible: true
+
+            });
+        });
+    </script>
+
+    
+
+</head>
+
+<body>
+    <img class="img-responsive" src="~/Content/images/ustmenubg.jpg" />
+    @Html.Partial("~/Views/Shared/Partials/MenuPartial.cshtml")
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
+            <aside class="col-md-3">
+                @Html.Partial("~/Views/Shared/Partials/SideBarPartial.cshtml")
+            </aside>
+        </div>
+    </div>
+    @Html.Partial("~/Views/Shared/Partials/FooterPartial.cshtml")
+
+    <!-- BackToTop Button -->
+    <a href="javascript:void(0);" id="scroll" title="Scroll to Top" style="display: none;">Top<span></span></a>
+   
+</body>
+</html>

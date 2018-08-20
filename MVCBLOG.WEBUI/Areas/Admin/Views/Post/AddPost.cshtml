@@ -1,0 +1,74 @@
+﻿@model MVCBLOG.ENTITY.Model_Object.PostViewModel
+@using System.ComponentModel.DataAnnotations
+@using MVCBLOG.ENTITY.Model_Object
+
+<script src="~/Areas/Admin/Content/js/ckeditor/ckeditor.js"></script>
+<script src="~/Areas/Admin/Content/js/ckfinder/ckfinder.js"></script>
+<script>
+    $(function () {
+        $('#title').slugIt({
+            output: '.seolink'
+        });
+    });
+
+</script>
+
+
+@{
+    ViewBag.Title = "AddPost";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Makale Ekle</h2>
+
+<div class="row">
+    <div class="col-lg-8">
+        @*@Html.Partial("~/Areas/Admin/Views/Shared/Partial/FormMessagesPart.cshtml")*@
+        @using (@Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            @Html.Partial("Partials/_PartialResultMessages")
+
+            <div class="form-group">
+                <label>Başlık</label>
+                @Html.TextBoxFor(x => x.Title, new { @class = "form-control", @id = "title", @Type = "text", @name = "title", @placeholder = "Makale başlığını giriniz." })
+
+            </div>
+
+            <div class="form-group">
+                <label>Permalink</label>
+                @Html.TextBoxFor(x => x.Seolink, new { @class = "form-control seolink", @Type = "text", @placeholder = "Seo link giriniz." })
+            </div>
+
+            <div class="form-group">
+                <label>Kategori</label>
+
+                @Html.Partial("Partials/_PartialCategories")
+
+            </div>
+            <div class="form-group">
+                <label>Açıklama</label>
+                @*@{
+                        Model.Content= System.Web.HttpUtility.HtmlDecode(Model.Content);
+                    }*@
+
+                @*@Html.TextAreaFor(x => x.Content, new { @class = "ckeditor", style = "height: 500px" })*@
+                @Html.TextArea("Content" ,new { id="burak"})
+                <script type="text/javascript">
+                    var editor = CKEDITOR.instances['Content'];
+                    if (editor) { editor.destroy(true); }
+                    CKEDITOR.replace('Content', {
+                        enterMode: CKEDITOR.ENTER_BR,
+                    });
+                    CKFinder.setupCKEditor(null, '@Url.Content("~/Areas/Admin/Content/js/ckfinder/")');
+                </script>
+
+
+            </div>
+
+            <button type="submit" class="btn btn-primary active">Makale Ekle</button>
+        }
+
+    </div>
+</div>

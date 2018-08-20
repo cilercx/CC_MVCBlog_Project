@@ -1,0 +1,42 @@
+﻿@model MVCBLOG.ENTITY.Model_DTO.CategoryDTO
+@using System.ComponentModel.DataAnnotations;
+
+@{
+    ViewBag.Title = "UpdateCategory";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Kategori Güncelle</h2>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="col-lg-6">
+            @Html.HiddenFor(x => x.CategoryDtoId)
+            <div class="form-group">
+                @Html.Partial("Partials/_PartialResultMessages")
+                <div class="col-md-8">
+                    <b><label>Adı</label></b>
+                    @Html.TextBoxFor(x => x.NameCategoryDto, new { @class = "form-control", @placeholder = "Kategori adı giriniz." })
+                </div>
+                <div class="col-md-8">
+                    <p>Permalink</p>
+                    @Html.EditorFor(model => model.SeoCategoryDTO, new { htmlAttributes = new { @class = "form-control seolink", @Type = "text", @placeholder = "Seo link giriniz." } })
+                </div>
+                <div class="col-md-8">
+                    <b><label>Açıklaması</label></b>
+                    @Html.TextAreaFor(x => x.DescriptionCategoryDto, new { @class = "form-control", @placeholder = "Açıklama giriniz." })
+                </div>
+                <br />
+                <div class="col-md-8">
+                    <button type="submit" class="btn btn-success active">Güncelle</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+}
